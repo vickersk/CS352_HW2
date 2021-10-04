@@ -1,67 +1,92 @@
-// MODIFY THIS FILE
+// Code for CS 352 HW 2
+// Author: Kai Vickers
+
 #pragma once
 
+// TwoFourTree abstract base class, that is generic
+// over its element type
 template<typename T>
 struct TwoFourTree {
 
+    // Returns the size of a TreeFourTree (number of data elements)
     virtual const int size() const = 0;
 
 };
 
+// TwoNode subclass that inherits from TwoFourTree
 template<typename T>
 struct TwoNode : public TwoFourTree<T>{
 private:
-    T value;
-    TwoFourTree<T>* tree;
-    TwoFourTree<T>* tree2;
+    T data; // Single data element
+
+    // Child nodes:
+    TwoFourTree<T>* node;
+    TwoFourTree<T>* node2;
 
 public:
-    TwoNode(const T& v) : value(v), tree(nullptr), tree2(nullptr) {}
-    
-    TwoNode(const T& v, TwoFourTree<T>* t, TwoFourTree<T>* t2) : value(v), tree(t), tree2(t2) {}
 
+    // Creates a TwoNode from a single data element, sets child nodes to nullptr
+    TwoNode(const T& v) : data(v), node(nullptr), node2(nullptr) {}
+    
+    // Creates a TwoNode from a single data element and two existing TwoFourTrees
+    TwoNode(const T& v, TwoFourTree<T>* n, TwoFourTree<T>* n2) : data(v), node(n), node2(n2) {}
+
+    // Returns the size of a TreeFourTree (number of data elements)
+    // by calling size on child nodes if they aren't set to nullptr
     const int size() const override {
         int currentSize = 1;
 
-        if (tree) {
-            currentSize += tree->size();
+        // Checks if each child node is not nullptr
+        if (node) {
+            currentSize += node->size();
         }
 
-        if (tree2) {
-            currentSize += tree2->size();
+        if (node2) {
+            currentSize += node2->size();
         }
 
         return currentSize;
     }
 };
 
+// ThreeNode subclass that inherits from TwoFourTree
 template<typename T>
 struct ThreeNode : public TwoFourTree<T>{
 private:
-    T value;
-    T value2;
-    TwoFourTree<T>* tree;
-    TwoFourTree<T>* tree2;
-    TwoFourTree<T>* tree3;
+    // Data elements:
+    T data;
+    T data2;
+
+    // Child nodes:
+    TwoFourTree<T>* node;
+    TwoFourTree<T>* node2;
+    TwoFourTree<T>* node3;
 
 public:
-    ThreeNode(const T& v, const T& v2) : value(v), value2(v2), tree(nullptr), tree2(nullptr), tree3(nullptr) {}
-    
-    ThreeNode(const T& v, const T& v2, TwoFourTree<T>* t, TwoFourTree<T>* t2, TwoFourTree<T>* t3) : value(v), value2(v2), tree(t), tree2(t2), tree3(t3) {}
 
+    // Creates a ThreeNode from a two data elements, sets child nodes to nullptr
+    ThreeNode(const T& v, const T& v2) : data(v), data2(v2), node(nullptr), node2(nullptr), node3(nullptr) {}
+    
+    // Creates a ThreeNode from a two data element and three existing TwoFourTrees
+    ThreeNode(const T& v, const T& v2, TwoFourTree<T>* n, TwoFourTree<T>* n2, TwoFourTree<T>* n3) : 
+        data(v), data2(v2), node(n), node2(n2), node3(n3) {}
+
+    // Returns the size of a TreeFourTree (number of data elements)
+    // by calling size on child nodes if they aren't set to nullptr
     const int size() const override {
         int currentSize = 2;
 
-        if (tree) {
-            currentSize += tree->size();
+        // Checks if each child node is not nullptr
+        if (node) {
+            currentSize += node->size();
         }
 
-        if (tree2) {
-            currentSize += tree2->size();
+        if (node2) {
+            currentSize += node2->size();
         }
 
-        if (tree3) {
-            currentSize += tree3->size();
+        if (node3) {
+            currentSize += node3->size();
         }
 
         return currentSize;
@@ -69,39 +94,52 @@ public:
 
 };
 
+// ThreeNode subclass that inherits from TwoFourTree
 template<typename T>
 struct FourNode : public TwoFourTree<T>{
 private:
-    T value;
-    T value2;
-    T value3;
-    TwoFourTree<T>* tree;
-    TwoFourTree<T>* tree2;
-    TwoFourTree<T>* tree3;
-    TwoFourTree<T>* tree4;
+    // Data elements:
+    T data;
+    T data2;
+    T data3;
+
+    // Child nodes:
+    TwoFourTree<T>* node;
+    TwoFourTree<T>* node2;
+    TwoFourTree<T>* node3;
+    TwoFourTree<T>* node4;
 
 public:
-    FourNode(const T& v, const T& v2, const T& v3) : value(v), value2(v2), value(v3), tree(nullptr), tree2(nullptr), tree3(nullptr), tree4(nullptr) {}
-    
-    FourNode(const T& v, const T& v2, const T& v3, TwoFourTree<T>* t, TwoFourTree<T>* t2, TwoFourTree<T>* t3, TwoFourTree<T>* t4) : value(v), value2(v2), value3(v3), tree(t), tree2(t2), tree3(t3), tree4(t4) {}
 
+    // Creates a FourNode from a three data elements, sets child nodes to nullptr
+    FourNode(const T& v, const T& v2, const T& v3) : 
+        data(v), data2(v2), data(v3), node(nullptr), node2(nullptr), node3(nullptr), node4(nullptr) {}
+    
+    // Creates a FourNode from a three data element and four existing TwoFourTrees
+    FourNode(const T& v, const T& v2, const T& v3, TwoFourTree<T>* n, 
+        TwoFourTree<T>* n2, TwoFourTree<T>* n3, TwoFourTree<T>* n4) : 
+        data(v), data2(v2), data3(v3), node(n), node2(n2), node3(n3), node4(n4) {}
+
+    // Returns the size of a TreeFourTree (number of data elements)
+    // by calling size on child nodes if they aren't set to nullptr
     const int size() const override {
         int currentSize = 3;
 
-        if (tree) {
-            currentSize += tree->size();
+        // Checks if each child node is not nullptr
+        if (node) {
+            currentSize += node->size();
         }
 
-        if (tree2) {
-            currentSize += tree2->size();
+        if (node2) {
+            currentSize += node2->size();
         }
 
-        if (tree3) {
-            currentSize += tree3->size();
+        if (node3) {
+            currentSize += node3->size();
         }
 
-        if (tree4) {
-            currentSize += tree4->size();
+        if (node4) {
+            currentSize += node4->size();
         }
 
         return currentSize;
